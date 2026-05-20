@@ -1,20 +1,22 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/syncStyleClass",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, syncStyleClass, JSONModel) {
+    function (Controller, syncStyleClass, JSONModel, Filter, FilterOperator) {
         "use strict";
 
         return Controller.extend("sap.training.exc.controller.Overview", {
-            onInit: function () {
+            onInit: function () { //Initialize the JSON model and set it to the view with the name "customer"
                 var oModel = new JSONModel();
                 this.getView().setModel(oModel, "customer")
             },
-            onSave: function () {
+            onSave: function () { //Open Dialog box when Save Button is clicked
                 if (!this.pDialog) {
                     this.pDialog = this.loadFragment({
                         name: "sap.training.exc.view.Dialog"
@@ -27,12 +29,23 @@ sap.ui.define([
                     oDialog.open();
                 });
             },
-            onCloseDialog: function () {
+            onCloseDialog: function () { //Close Dialog box when OK Button is clicked
                 this.byId("dialog").close();
             },
-            onCustomerChange: function (oEvent) {
+            onCustomerChange: function (oEvent) { //Change the binding context of the booking table (item table) to the selected customer
                 var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
                 this.byId("bookingTable").setBindingContext(oBindingContext);
+            },
+            onFilterCustomers: function (oEvent) { //Retrive customers that match the search query
+                var aFilter = [];
+                var sQuery = oEvent.getParameter("query");
+                if (sQuery && sQuery.length > 0) {
+                    aFilter.push(new Filter("CustomerName", FilterOperator.Contains, sQuery));
+                }
+
+                var oTable = this.byId("customerTable");
+                var oBinding = oTable.getBinding("items");
+                oBinding.filter(aFilter);
             }
         });
     });

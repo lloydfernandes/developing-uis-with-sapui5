@@ -2,7 +2,8 @@
           xmlns:mvc="sap.ui.core.mvc"  
           xmlns:f="sap.ui.layout.form"
           xmlns:core="sap.ui.core"
-          xmlns="sap.m">
+          xmlns="sap.m"
+          core:require="{formatter: 'sap/training/exc/model/formatter'}">
 
     <Page title="Flight Customers">
         <content>
@@ -24,9 +25,9 @@
 
                         <Label text="Customer Name"/>
                         <Input value="{customer>/CustomerName}"/>
-                        
-                        <Input
-                            value="{
+
+                        <Label text="Discount"/>
+                        <Input value="{
                                 path: 'customer>/Discount',
                                 type: 'sap.ui.model.type.Integer',
                                 constraints: {minimum: 0, maximum: 100}
@@ -55,9 +56,21 @@
                 </f:SimpleForm>
             </content>
             </Panel>
-            <Table headerText="Customers" growing="true" growingThreshold="5"
+            <Table id="customerTable" growing="true" growingThreshold="5"
                 mode="SingleSelectLeft" selectionChange=".onCustomerChange"
-                class="sapUiResponsiveMargin" width="auto" items="{/Customers}">
+                class="sapUiResponsiveMargin" width="auto" 
+                items="{ path: '/Customers',
+                        sorter: [
+                            {path: 'City', group: true},
+                            {path: 'CustomerName'} ]
+                        }">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Customers"/>
+                        <ToolbarSpacer/>
+                        <SearchField width="40%" search=".onFilterCustomers"/>
+                    </Toolbar>
+                </headerToolbar>
             <columns>
                 <Column><header><Text text="Customer Name"/></header></Column>
                 <Column><header><Text text="Street"/></header></Column>
@@ -103,7 +116,10 @@
                             style: 'medium'
                             }
                         }"/>
-                    <Text text="{Class}"/>
+                    <Text text="{
+                        path: 'Class',
+                        formatter: 'formatter.classText'
+                        }"/>
                     
                     <ObjectNumber
                         number="{
