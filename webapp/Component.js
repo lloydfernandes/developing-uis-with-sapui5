@@ -19,6 +19,9 @@ sap.ui.define([
                 var oDeviceModel = new JSONModel(Device);
                 oDeviceModel.setDefaultBindingMode("OneWay");
                 this.setModel(oDeviceModel, "device");
+
+                // enable routing
+                this.getRouter().initialize();
             },
 
             getContentDensityClass: function () {

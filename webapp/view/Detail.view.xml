@@ -2,6 +2,10 @@
           xmlns:mvc="sap.ui.core.mvc" 
           xmlns="sap.m">
 
-   
-	
+    <Page title="{i18n>detailPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
+    <content>
+
+    </content>
+    </Page>
+
 </mvc:View>

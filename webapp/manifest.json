@@ -96,10 +96,36 @@
                 "async": true,
                 "viewPath": "sap.training.exc.view",
                 "controlAggregation": "pages",
-                "controlId": "<...>"
+                "controlId": "app"
             },
-            "routes": [],
-            "targets": {}
+            "routes": [
+                {
+                    "name": "overview",
+                    "pattern": "",
+                    "target": [
+                        "overview"
+                    ]
+                },
+                {
+                    "name": "detail",
+                    "pattern": "detail",
+                    "target": [
+                        "detail"
+                    ]
+                }
+            ],
+            "targets": {
+                "overview": {
+                    "viewId": "overview",
+                    "viewName": "Overview",
+                    "viewLevel": 1
+                    },
+                "detail": {
+                    "viewId": "detail",
+                    "viewName": "Detail",
+                    "viewLevel": 2
+                }            
+            }
         },
         "rootView": {
             "viewName": "sap.training.exc.view.App",
