@@ -67,7 +67,9 @@
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
                     "bundleName": "sap.training.exc.i18n.i18n",
-                    "supportedLocales": [""],
+                    "supportedLocales": [
+                        ""
+                    ],
                     "fallbackLocale": ""
                 }
             },
@@ -96,7 +98,12 @@
                 "async": true,
                 "viewPath": "sap.training.exc.view",
                 "controlAggregation": "pages",
-                "controlId": "app"
+                "controlId": "app",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                }
             },
             "routes": [
                 {
@@ -108,7 +115,7 @@
                 },
                 {
                     "name": "detail",
-                    "pattern": "detail",
+                    "pattern": "detail/{customerId}",
                     "target": [
                         "detail"
                     ]
@@ -119,12 +126,17 @@
                     "viewId": "overview",
                     "viewName": "Overview",
                     "viewLevel": 1
-                    },
+                },
                 "detail": {
                     "viewId": "detail",
                     "viewName": "Detail",
                     "viewLevel": 2
-                }            
+                },
+                "notFound": {
+                    "viewId": "notFound",
+                    "viewName": "NotFound",
+                    "transition": "show"
+                }
             }
         },
         "rootView": {
